@@ -3,6 +3,7 @@ package com.folm.chat;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,9 +17,12 @@ public class ChatServer {
 
         try {
             ss = new ServerSocket(8888);
+        } catch (BindException e){
+            System.out.println("端口占用中......");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         try {
             started = true;
@@ -35,7 +39,7 @@ public class ChatServer {
                 dis.close();
             }
         } catch (EOFException e){
-
+            System.out.println("Client Closed");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
